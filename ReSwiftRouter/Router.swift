@@ -46,7 +46,7 @@ public class Router<State: StateType>: StoreSubscriber {
                         self.routables[responsibleRoutableIndex]
                             .popRouteSegment(
                                 segmentToBePopped,
-                                animated: state.changeRouteAnimated) {
+                                animated: state.changeRouteAnimated) {_ in 
                                     dispatch_semaphore_signal(semaphore)
                         }
 
@@ -55,26 +55,32 @@ public class Router<State: StateType>: StoreSubscriber {
 
                 case let .Change(responsibleRoutableIndex, segmentToBeReplaced, newSegment):
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.routables[responsibleRoutableIndex + 1] =
+            //            self.routables[responsibleRoutableIndex + 1] =
                             self.routables[responsibleRoutableIndex]
                                 .changeRouteSegment(
                                     segmentToBeReplaced,
                                     to: newSegment,
-                                    animated: state.changeRouteAnimated) {
+                                    animated: state.changeRouteAnimated) { routable  in
+                                        if let r = routable as Routable! {
+                                            self.routables[responsibleRoutableIndex+1] = r
+                                        }
                                         dispatch_semaphore_signal(semaphore)
                         }
                     }
 
                 case let .Push(responsibleRoutableIndex, segmentToBePushed):
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.routables.append(
                             self.routables[responsibleRoutableIndex]
                                 .pushRouteSegment(
                                     segmentToBePushed,
-                                    animated: state.changeRouteAnimated) {
+                                animated: state.changeRouteAnimated) { routable  in
+                                    if let r = routable as Routable! {
+                                        self.routables.append(r)
+                                    }
+
                                         dispatch_semaphore_signal(semaphore)
-                            }
-                        )
+                        }
+                        
                     }
                 }
 

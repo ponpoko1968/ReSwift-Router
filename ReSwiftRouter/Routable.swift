@@ -6,14 +6,14 @@
 //  Copyright © 2015 DigiTales. All rights reserved.
 //
 
-public typealias RoutingCompletionHandler = () -> Void
+public typealias RoutingCompletionHandler = (Routable?) -> Void
 
 public protocol Routable {
 
     func pushRouteSegment(
         routeElementIdentifier: RouteElementIdentifier,
         animated: Bool,
-        completionHandler: RoutingCompletionHandler) -> Routable
+        completionHandler: RoutingCompletionHandler)
 
     func popRouteSegment(
         routeElementIdentifier: RouteElementIdentifier,
@@ -24,7 +24,7 @@ public protocol Routable {
         from: RouteElementIdentifier,
         to: RouteElementIdentifier,
         animated: Bool,
-        completionHandler: RoutingCompletionHandler) -> Routable
+        completionHandler: RoutingCompletionHandler) 
 
 }
 
@@ -33,7 +33,7 @@ extension Routable {
     public func pushRouteSegment(
         routeElementIdentifier: RouteElementIdentifier,
         animated: Bool,
-        completionHandler: RoutingCompletionHandler) -> Routable {
+        completionHandler: RoutingCompletionHandler)  {
             fatalError("This routable cannot change segments. You have not implemented it.")
     }
 
@@ -48,7 +48,7 @@ extension Routable {
         from: RouteElementIdentifier,
         to: RouteElementIdentifier,
         animated: Bool,
-        completionHandler: RoutingCompletionHandler) -> Routable {
+        completionHandler: RoutingCompletionHandler) {
             fatalError("This routable cannot change segments. You have not implemented it.")
     }
 
