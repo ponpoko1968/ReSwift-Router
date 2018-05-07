@@ -19,7 +19,7 @@ open class Router<State: StateType>: StoreSubscriber {
     let waitForRoutingCompletionQueue = DispatchQueue(label: "WaitForRoutingCompletionQueue", attributes: [])
 
     public init(store: Store<State>, rootRoutable: Routable,  stateSelector: @escaping NavigationStateSelector) {
-        self.store = store 
+        self.store = store
         self.routables.append(rootRoutable)
 
         self.store.subscribe(self, selector: stateSelector)
@@ -36,7 +36,7 @@ open class Router<State: StateType>: StoreSubscriber {
             // Dispatch all routing actions onto this dedicated queue. This will ensure that
             // only one routing action can run at any given time. This is important for using this
             // Router with UI frameworks. Whenever a navigation action is triggered, this queue will
-            // block (using semaphore_wait) until it receives a callback from the Routable 
+            // block (using semaphore_wait) until it receives a callback from the Routable
             // indicating that the navigation action has completed
             waitForRoutingCompletionQueue.async {
                 switch routingAction {
@@ -56,15 +56,17 @@ open class Router<State: StateType>: StoreSubscriber {
 
                 case let .change(responsibleRoutableIndex, segmentToBeReplaced, newSegment):
                     DispatchQueue.main.async {
-                        self.routables[responsibleRoutableIndex + 1] =
                             self.routables[responsibleRoutableIndex]
                                 .changeRouteSegment(
                                     segmentToBeReplaced,
                                     to: newSegment,
                                     animated: state.changeRouteAnimated,completionHandler:{
-                                                                            _ in
+                                                                            routable  in
+                                                                            if let r = routable as Routable! {
+                                                                                self.routables[responsibleRoutableIndex+1] = r
+                                                                            }
                                                                             semaphore.signal()
-                                                                        }) 
+                                                                        })
                     }
 
                 case let .push(responsibleRoutableIndex, segmentToBePushed):
@@ -74,9 +76,12 @@ open class Router<State: StateType>: StoreSubscriber {
                                 .pushRouteSegment(
                                     segmentToBePushed,
                                     animated: state.changeRouteAnimated,completionHandler:{
-                                                                            _ in
+                                                                            routable in
+                                                                            if let r = routable as Routable! {
+                                                                                self.routables.append(r)
+                                                                            }
                                                                             semaphore.signal()
-                                                                        }) 
+                                                                        })
                         )
                     }
                 }
