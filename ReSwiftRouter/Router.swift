@@ -71,7 +71,6 @@ open class Router<State: StateType>: StoreSubscriber {
 
                 case let .push(responsibleRoutableIndex, segmentToBePushed):
                     DispatchQueue.main.async {
-                        self.routables.append(
                             self.routables[responsibleRoutableIndex]
                                 .pushRouteSegment(
                                     segmentToBePushed,
@@ -82,7 +81,6 @@ open class Router<State: StateType>: StoreSubscriber {
                                                                             }
                                                                             semaphore.signal()
                                                                         })
-                        )
                     }
                 }
 
