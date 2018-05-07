@@ -16,7 +16,7 @@ import ReSwift
  */
 public struct NavigationReducer {
 
-    public static func handleAction(action: Action, state: NavigationState?) -> NavigationState {
+    public static func handleAction(_ action: Action, state: NavigationState?) -> NavigationState {
         let state = state ?? NavigationState()
 
         switch action {
@@ -31,7 +31,9 @@ public struct NavigationReducer {
         return state
     }
 
-    static func setRoute(var state: NavigationState, setRouteAction: SetRouteAction) -> NavigationState {
+    static func setRoute(_ state: NavigationState, setRouteAction: SetRouteAction) -> NavigationState {
+        var state = state
+
         state.route = setRouteAction.route
         state.changeRouteAnimated = setRouteAction.animated
 
@@ -39,10 +41,12 @@ public struct NavigationReducer {
     }
 
     static func setRouteSpecificData(
-        var state: NavigationState,
+        _ state: NavigationState,
         route: Route,
         data: Any) -> NavigationState{
             let routeHash = RouteHash(route: route)
+
+            var state = state
 
             state.routeSpecificState[routeHash] = data
 

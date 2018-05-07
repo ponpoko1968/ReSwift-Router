@@ -12,7 +12,7 @@ The application state is defined in a single data structure which should be a st
 
 The state struct should store your entire application state, that includes the UI state, the navigation state and the state of your model layer.
 
-Here's an example of a state struct as defined in the [Counter Example](https://github.com/ReSwift/CounterExample):
+Here's an example of a state struct as defined in the [Counter Example](https://github.com/ReSwift/CounterExample-Navigation-TimeTravel):
 
 ```swift
 struct AppState: StateType {
@@ -207,14 +207,12 @@ func fetchGitHubRepositories(state: State, store: Store<State>) -> Action? {
     guard case let .LoggedIn(configuration) = state.authenticationState.loggedInState  else { return nil }
 
     Octokit(configuration).repositories { response in
-    	store.dispatch(SetRepositories(repositories: .Loading))
-    
         dispatch_async(dispatch_get_main_queue()) {
-            store.dispatch(SetRepostories(repositories: `.Repositories(response)))
+            store.dispatch(SetRepostories(repositories: .Repositories(response)))
         }
     }
 
-    return nil
+    return SetRepositories(repositories: .Loading)
 }
 ```
 
@@ -246,7 +244,7 @@ func doubleValueIfSmall(state: TestAppState, store: Store<TestAppState>) -> Acti
 
 ## Middleware
 
-ReSwift supports middleware in the same way as Redux does, [you can read this great documentation on Redux middleware to get started](http://rackt.org/redux/docs/advanced/Middleware.html). Middleware allows developers to provide extensions that wrap the `dispatch` function.
+ReSwift supports middleware in the same way as Redux does, [you can read this great documentation on Redux middleware to get started](http://redux.js.org/docs/advanced/Middleware.html). Middleware allows developers to provide extensions that wrap the `dispatch` function.
 
 Let's take a look at a quick example that shows how ReSwift supports Redux style middleware.
 
@@ -268,7 +266,7 @@ let loggingMiddleware: Middleware = { dispatch, getState in
 You can define which middleware you would like to use when creating your store:
 
 ```swift
-MainStore(reducer: reducer, appState: TestStringAppState(),
+Store(reducer: reducer, appState: TestStringAppState(),
                     middleware: [loggingMiddleware, secondMiddleware])
 ```
 The actions will pass through the middleware in the order in which they are arranged in the array passed to the store initializer, however ideally middleware should not make any assumptions about when exactly it is called.

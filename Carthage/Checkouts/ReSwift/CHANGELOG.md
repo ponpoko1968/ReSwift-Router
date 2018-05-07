@@ -1,8 +1,47 @@
 #Upcoming Release
 
+#3.0.0
+*Released: 11/12/2016*
+
+**Breaking API Changes:**
+- Dropped support for Swift 2.2 and lower (#157) - @Ben-G
+
+**API Changes:**
+- Mark `Store` as `open`, this reverts a previously accidental breaking API Change (#157) - @Ben-G
+
+**Other**:
+- Update to Swift 3.0.1 - @Cristiam, @Ben-G
+- Documentation changes - @vkotovv
+
+#2.1.0
+
+*Released: 09/15/2016*
+
+**Other**:
+
+- Swift 3 preview compatibility, maintaining Swift 2 naming - (#126) - @agentk
+- Xcode 8 GM Swift 3 Updates (#149) - @tkersey
+- Migrate Quick/Nimble testing to XCTest - (#127) - @agentk
+- Automatically build docs via Travis CI (#128) - @agentk
+- Documentation Updates & Fixes- @mikekavouras, @ColinEberhardt
+
+#2.0.0
+
+*Released: 06/27/2016*
+
+**Breaking API Changes**:
+
+- Significant Improvements to Serialization Code for `StandardAction` (relevant for recording tools) - @okla
+
+**Other**:
+
+- Swift 2.3 Updates - @agentk
+- Documentation Updates & Fixes - @okla, @gregpardo, @tomj, @askielboe, @mitsuse, @esttorhe, @RyanCCollins, @thomaspaulmann, @jlampa
+
+
 #1.0.0
 
-*Released: 03/19/2015*
+*Released: 03/19/2016*
 
 **API Changes:**
 - Remove callback arguments on synchronous dispatch methods - @Ben-G
@@ -16,7 +55,7 @@
 
 #0.2.5
 
-*Released: 02/20/2015*
+*Released: 02/20/2016*
 
 **API Changes:**
 
@@ -37,7 +76,7 @@
 
 #0.2.4
 
-*Released: 01/23/2015*
+*Released: 01/23/2016*
 
 **API Changes:**
 

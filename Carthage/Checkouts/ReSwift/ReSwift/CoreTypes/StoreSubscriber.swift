@@ -13,7 +13,7 @@ public protocol AnyStoreSubscriber: class {
 }
 
 public protocol StoreSubscriber: AnyStoreSubscriber {
-    typealias StoreSubscriberStateType
+    associatedtype StoreSubscriberStateType
 
     func newState(state: StoreSubscriberStateType)
 }
@@ -21,7 +21,7 @@ public protocol StoreSubscriber: AnyStoreSubscriber {
 extension StoreSubscriber {
     public func _newState(state: Any) {
         if let typedState = state as? StoreSubscriberStateType {
-            newState(typedState)
+            newState(state: typedState)
         }
     }
 }
