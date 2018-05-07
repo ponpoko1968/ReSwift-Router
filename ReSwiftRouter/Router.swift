@@ -47,6 +47,7 @@ open class Router<State: StateType>: StoreSubscriber {
                             .popRouteSegment(
                                 segmentToBePopped,
                                 animated: state.changeRouteAnimated) {
+                                _ in
                                     semaphore.signal()
                         }
 
@@ -61,6 +62,7 @@ open class Router<State: StateType>: StoreSubscriber {
                                     segmentToBeReplaced,
                                     to: newSegment,
                                     animated: state.changeRouteAnimated) {
+                                    _ in
                                         semaphore.signal()
                         }
                     }
@@ -72,6 +74,7 @@ open class Router<State: StateType>: StoreSubscriber {
                                 .pushRouteSegment(
                                     segmentToBePushed,
                                     animated: state.changeRouteAnimated) {
+                                    _ in
                                         semaphore.signal()
                             }
                         )
