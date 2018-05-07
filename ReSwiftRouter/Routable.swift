@@ -6,7 +6,7 @@
 //  Copyright © 2015 DigiTales. All rights reserved.
 //
 
-public typealias RoutingCompletionHandler = (Routable?) -> Void
+public typealias RoutingCompletionHandler = (Routable?) -> ()
 
 public protocol Routable {
 

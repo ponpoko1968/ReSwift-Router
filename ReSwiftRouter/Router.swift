@@ -61,10 +61,10 @@ open class Router<State: StateType>: StoreSubscriber {
                                 .changeRouteSegment(
                                     segmentToBeReplaced,
                                     to: newSegment,
-                                    animated: state.changeRouteAnimated) {
-                                    _ in
-                                        semaphore.signal()
-                        }
+                                    animated: state.changeRouteAnimated,completionHandler:{
+                                                                            _ in
+                                                                            semaphore.signal()
+                                                                        }) 
                     }
 
                 case let .push(responsibleRoutableIndex, segmentToBePushed):
@@ -73,10 +73,10 @@ open class Router<State: StateType>: StoreSubscriber {
                             self.routables[responsibleRoutableIndex]
                                 .pushRouteSegment(
                                     segmentToBePushed,
-                                    animated: state.changeRouteAnimated) {
-                                    _ in
-                                        semaphore.signal()
-                            }
+                                    animated: state.changeRouteAnimated,completionHandler:{
+                                                                            _ in
+                                                                            semaphore.signal()
+                                                                        }) 
                         )
                     }
                 }
